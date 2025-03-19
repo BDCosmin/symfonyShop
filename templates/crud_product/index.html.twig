@@ -1,0 +1,63 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Index produse</h1>
+        <a href="{{ path('app_crud_product_new') }}">
+            <button type="button" class="btn btn-warning">Adauga produs</button>
+        </a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nume</th>
+                <th>Pret</th>
+                <th>Descriere</th>
+                <th>Oferta</th>
+                <th>Discount</th>
+                <th>Imagini</th>
+                <th>Actiuni</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.offerStatus ? 'Da' : 'Nu' }}</td>
+                    <td>{{ product.discount }} %</td>
+                    <td>
+                        <div class="d-flex flex-row w-50">
+                            {% for image in product.productImages %}
+                                <div class="d-flex flex-column w-25">
+                                    <img src="{{ asset('img/'~image.image) }}" height="70" alt=""/>
+                                    <br/>
+                                    <a href="{{ path('app_crud_product_remove_image', {'id': image.id}) }}" style="background-color: cornflowerblue; color: white; font-size: 12px" class="ps-1 pe-1">Sterge</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        <a href="{{ path('app_crud_product_show', {'id': product.id}) }}">
+                            <button type="button" class="btn btn-primary">Arata</button>
+                        </a>
+                        <a href="{{ path('app_crud_product_edit', {'id': product.id}) }}">
+                            <button type="button" class="btn btn-primary">Editeaza</button>
+                        </a>
+                        <form method="post" action="{{ path('app_crud_product_delete', {'id': product.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                            <button type="submit" class="btn btn-danger">Sterge</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Nu a fost gasit niciun produs.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

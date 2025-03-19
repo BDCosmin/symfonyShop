@@ -1,0 +1,11 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Create new Vendor</h1>
+
+    {{ include('vendor/_form.html.twig') }}
+
+    <a href="{{ path('app_vendor_index') }}">back to list</a>
+</div>
+{% endblock %}

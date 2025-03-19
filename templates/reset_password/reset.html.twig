@@ -1,0 +1,12 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Reset your password</h1>
+
+    {{ form_start(resetForm) }}
+        {{ form_row(resetForm.plainPassword) }}
+        <button class="btn btn-primary">Reset password</button>
+    {{ form_end(resetForm) }}
+</div>
+{% endblock %}

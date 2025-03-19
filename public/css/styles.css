@@ -1,0 +1,86 @@
+.headerContainer {
+    background-color: #1e1e1e;
+    color: white;
+}
+.navbarContainer {
+    background-color: #393939;
+    color: white;
+}
+.logo {
+    width: 70px;
+    height: 70px;
+}
+.iconImage {
+    width: 30px;
+    height: 30px;
+}
+.categorySectionStyle {
+    background-color: rgb(255 193 7);
+    color: #1e1e1e;
+    border-radius: 4px;
+}
+.slideSize {
+    width: 950px;
+    height: 500px;
+}
+.homepageOfferSize {
+    width: 295px;
+    height: 300px;
+}
+.homepageOfferResize {
+    width: 175px;
+    height: 193px;
+}
+#newsletter {
+    width: 900px;
+}
+.productImage {
+    max-width: 100%;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+.offerBadge {
+    height: 20px;
+    margin-top: 15px;
+    margin-left: 15px;
+    user-select: none;
+}
+.offerBadgeMenu {
+    height: 20px;
+    margin-top: 3px;
+    margin-left: 15px;
+    user-select: none;
+}
+.productInfoBox {
+    border: 2px solid #bcbcbc;
+    border-radius: 4px;
+    box-shadow: 5px 10px #bcbcbc;
+}
+.adminPanel {
+    background-color: #393939;
+    color: white;
+    border-radius: 4px 4px 0 0;
+}
+.adminPanelOptions {
+    background-color: #575757;
+    border-radius: 0 0 4px 4px;
+}
+.footerStyle {
+    color: white;
+    text-decoration: none;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+    background-color: #f8f9fa;
+}

@@ -1,0 +1,38 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Vendor index</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for vendor in vendors %}
+                <tr>
+                    <td>{{ vendor.id }}</td>
+                    <td>{{ vendor.name }}</td>
+                    <td>
+                        <a href="{{ path('app_vendor_edit', {'id': vendor.id}) }}">
+                            <button type="button" class="btn btn-primary">Edit</button>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No records found.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_vendor_new') }}">
+            <button type="button" class="btn btn-warning">Add vendor</button>
+        </a>
+    </div>
+{% endblock %}

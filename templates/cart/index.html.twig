@@ -1,0 +1,57 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Produse din cart</h1>
+    <table class="table">
+        <tr>
+            <th>Produs</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+        {% for cartItem in cart.cartItems %}
+            <tr>
+                <td>{{ cartItem.product.name }}</td>
+                <td>
+                    {{ cartItem.product.calculateDiscount()|round(0, 'floor') }} RON
+                </td>
+                <td>
+                    <form action="{{ url('cart_update', {'product': cartItem.product.id}) }}" method="post">
+                        <input type="number" min="1" max="100" name="quantity" value="{{ cartItem.quantity }}" >
+                        <button class="btn btn-success" type="submit">Actualizeaza</button>
+                    </form>
+                </td>
+                <td>
+                    {{ cartService.getCartItemTotal(cartItem) }} RON
+                </td>
+                <td><a class="btn btn-danger" href="{{ url('cart_delete', {'product': cartItem.product.id}) }}">Sterge</a></td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>
+                {% if cartService.getCartTotal() > 199 %}
+                    <strike>{{ cartService.getCartTotal() }} RON</strike>
+                    <hr/>
+                    <p style="color: red">{{ cartService.getPromoCartTotal()|round(0, 'floor') }} RON</p>
+                {% else %}
+                    <p><b>{{ cartService.getCartTotal() }} RON</b></p>
+                {% endif %}
+            </th>
+            <th></th>
+        </tr>
+    </table>
+    <div class="justify-content-end mb-2">
+        <a href="{{ url('cart_empty') }}" class="me-2">
+            <button type="button" class="btn btn-danger">
+                Goleste cosul
+            </button>
+        </a>
+        <p style="color: #606060">Notice: Ai reducere 10% pentru fiecare cos care insumeaza peste 200 RON!</p>
+    </div>
+</div>
+{% endblock %}

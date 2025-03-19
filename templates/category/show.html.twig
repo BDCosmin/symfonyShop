@@ -1,0 +1,96 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+    <div class="container mt-5 mb-5">
+        <div class="row mb-3">
+            <div class="col-12">
+                {% if not form_submitted %}
+                    <h1>{{ category }}</h1>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row mb-5 d-flex flex-column">
+            <div class="col-12 p-3 bg-light rounded">
+                <h4>Filtre:</h4>
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-12">
+                        {{ form_label(form.price_range) }}
+                        {{ form_widget(form.price_range, {'attr': {'class': 'form-control d-flex flex-row'}}) }}
+                    </div>
+                    <div class="col-12">
+                        {{ form_label(form.category) }}
+                        {{ form_widget(form.category, {'attr': {'class': 'form-control d-flex flex-row'}}) }}
+                    </div>
+                    <div class="col-12 mb-3">
+                        {{ form_label(form.vendor) }}
+                        {{ form_widget(form.vendor, {'attr': {'class': 'form-control d-flex flex-row'}}) }}
+                    </div>
+                    <div class="col-12 mt-2">
+                        {{ form_widget(form.Filter) }}
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <div class="row">
+            {% for product in products %}
+                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mb-4">
+                    <div class="card">
+                        {% if product.productImages|length > 0 %}
+                            <a href="{{ url('product_view', {'product': product.id}) }}" style="text-decoration: none; color: #1e1e1e">
+                                <img src="{{ asset('img/'~product.productImages[0].image) }}" alt="{{ product.productImages[0].image }}" class="card-img-top" style="object-fit: cover; height: 300px; width: 100%;" />
+                            </a>
+                        {% endif %}
+                        <div class="card-body">
+                            <a href="{{ url('product_view', {'product': product.id}) }}" style="text-decoration: none; color: #1e1e1e">
+                                <h5 class="card-title">{{ product }}</h5>
+                            </a>
+                            <div id="rating1" class="star-rating" role="rating" data-rating="3" style="user-select: none">
+                                <span class="star" data-value="1">&#9733;<span class="star-notification"></span></span>
+                                <span class="star" data-value="2">&#9733;<span class="star-notification"></span></span>
+                                <span class="star" data-value="3">&#9733;<span class="star-notification"></span></span>
+                                <span class="star" data-value="4">&#9733;<span class="star-notification"></span></span>
+                                <span class="star" data-value="5">&#9733;<span class="star-notification"></span></span>
+                            </div>
+                            <div class="d-flex flex-row">
+                                {% if product.offerStatus %}
+                                    <div class="d-flex flex-column">
+                                        <p class="card-text text-danger">
+                                            <strike>{{ product.formatNumber(product.price) }} RON</strike>
+                                            (-{{ product.discount }}%)
+                                        </p>
+                                        <h5 class="card-text text-danger">{{ product.formatNumber(product.calculateDiscount()) }} RON</h5>
+                                    </div>
+                                    <span class="badge text-bg-danger offerBadgeMenu">OFERTA!</span>
+                                {% else %}
+                                    <h5 class="card-text text-warning">{{ product.formatNumber(product.price) }} RON</h5>
+                                {% endif %}
+                            </div>
+                            <p><i>produs in stoc</i></p>
+                            {% if app.user %}
+                                <a href="{{ url('cart_add', {'product': product.id}) }}">
+                                    <button class="btn btn-warning" data-product-id="{{ product.id }}" data-bs-target="#modal-{{ product.id }}">
+                                        Adauga in cos
+                                    </button>
+                                </a>
+                            {% else %}
+                                <a href="{{ path('app_login') }}">
+                                    <button class="btn btn-warning" data-product-id="{{ product.id }}" data-bs-target="#modal-{{ product.id }}">
+                                        Adauga in cos
+                                    </button>
+                                </a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+<script>
+    const ratings = document.getElementById('rating1');
+    const rating1 = new CDB.Rating(ratings);
+    rating1.getRating;
+</script>

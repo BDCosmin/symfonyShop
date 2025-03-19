@@ -1,0 +1,46 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>User index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Verified</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username|split('@')|first }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}">
+                        <button type="button" class="btn btn-primary">Show</button>
+                    </a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                    </a>
+                    <a href="{{ path('app_user_delete', {'id': user.id}) }}">
+                        <button type="button" class="btn btn-primary">Delete</button>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No records found.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

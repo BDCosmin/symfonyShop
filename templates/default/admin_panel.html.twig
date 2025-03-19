@@ -1,0 +1,28 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-12 mt-5 mb-2">
+                <h1>Panou de administrator</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex flex-column p-3 ms-3 adminPanel">
+                <div class="d-flex flex-row">
+                    <img src="{{ asset('img/user.png') }}" style="width: 30px; height: 30px" class="mt-4 me-3" alt=""/>
+                    <h4 class="mt-3">{{ app.user.username|split('@')|first }}</h4>
+                </div>
+                <small class="ms-5">Adresa de email: <b>{{ app.user.username }}</b></small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex flex-row p-3 ms-3 adminPanelOptions">
+                <a href="{{ path('app_crud_product_index') }}"><button class="btn btn-warning mb-2 me-5">Afiseaza produse</button></a>
+                <a href="{{ path('category_index') }}"><button class="btn btn-warning mb-2 me-5">Afiseaza categorii</button></a>
+                <a href="{{ path('app_user_index') }}"><button class="btn btn-warning mb-2 me-5">Afiseaza useri</button></a>
+                <a href="{{ path('app_vendor_index') }}"><button class="btn btn-warning mb-2 me-5">Afiseaza vendori</button></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

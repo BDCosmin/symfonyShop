@@ -1,0 +1,21 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mt-3 mb-1">
+                <h1>Contacteaza-ne</h1>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-12">
+                <p>Ai vreo nelamurire, sugestie sau pur si simplu un gand bun de impartasit cu noi? Scrie-ne prin email iar noi vom asculta!</p>
+            </div>
+        </div>
+       <div class="row">
+           <div class="col-12">
+                {{ form(contactForm) }}
+           </div>
+       </div>
+    </div>
+{% endblock %}

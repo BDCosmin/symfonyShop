@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}?v={{ 'now'|date('U') }}">
+    {% endblock %}
+
+    {% block javascripts %}
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    {% endblock %}
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row pt-2 pb-2 headerContainer">
+        <div class="col-2"></div>
+        <div class="col-1">
+            <a href="{{ url('homepage') }}">
+                <img class="logo" src="{{ asset('img/logo.png') }}" alt="SoundVault logo"/>
+            </a>
+        </div>
+        <div class="col-4">
+            <form class="mt-3 d-xxl-flex d-xl-flex d-lg-flex d-md-flex d-sm-none d-xs-none" role="search" method="GET" action="{{ path('search_results') }}">
+                <input class="form-control me-2" type="search" placeholder="Descopera..." name="searchInput" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">
+                    <img style="width: 17px; height: 17px; margin-bottom: 5px" src="{{ asset('img/magnifying-glass-solid.png') }}" alt=""/>
+                </button>
+            </form>
+            <form class="mt-3 justify-content-evenly d-xxl-none d-xl-none d-lg-none d-md-none d-sm-flex d-xs-flex" role="search" method="GET" action="{{ path('search_results') }}">
+                <button class="btn btn-outline-light" type="submit">
+                    <img style="width: 17px; height: 17px; margin-bottom: 5px" src="{{ asset('img/magnifying-glass-solid.png') }}" alt=""/>
+                </button>
+            </form>
+        </div>
+        <div class="col-3 d-flex justify-content-end">
+            <ul class="navbar-nav d-flex flex-row mt-3">
+                <li class="nav-item me-3 d-xxl-flex d-xl-flex d-lg-none d-md-none d-sm-none d-xs-none">
+                    <a class="nav-link active" aria-current="page" href="{{ url('cart') }}">
+                        <img class="iconImage me-1" src="{{ asset('img/cart.png') }}" alt="Shopping Cart"/>
+                        Cosul meu
+                        <span class="badge text-bg-light ms-1">{{ cartService.getCartCount() }}</span>
+                    </a>
+                </li>
+                <li class="nav-item me-3 d-xxl-none d-xl-none d-lg-flex d-md-none d-sm-none d-xs-none">
+                    <a class="nav-link active" aria-current="page" href="{{ url('cart') }}">
+                        <img class="iconImage me-1" src="{{ asset('img/cart.png') }}" alt="Shopping Cart"/>
+                        Cos
+                        <span class="badge text-bg-light ms-1">{{ cartService.getCartCount() }}</span>
+                    </a>
+                </li>
+                <li class="nav-item me-3 d-xxl-none d-xl-none d-lg-none d-md-flex d-sm-flex d-xs-flex">
+                    <a class="nav-link active" aria-current="page" href="{{ url('cart') }}">
+                        <img class="iconImage" src="{{ asset('img/cart.png') }}" alt="Shopping Cart"/>
+                        <span class="badge text-bg-light">{{ cartService.getCartCount() }}</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown me-4">
+                    <a class="nav-link d-xxl-flex d-xl-flex d-lg-none d-md-none d-sm-none d-xs-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="iconImage" src="{{ asset('img/user.png') }}" alt="Account"/>
+                        Cont
+                    </a>
+                    <a class="nav-link d-xxl-none d-xl-none d-lg-flex d-md-flex d-sm-flex d-xs-flex" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="iconImage" src="{{ asset('img/user.png') }}" alt="Account"/>
+                    </a>
+                    {% if app.user %}
+                        <div class="dropdown-menu p-2 w-75">
+                            <ul style="list-style: none; margin: 0; padding: 0">
+                                <li class="mt-1"><span><b>{{ app.user.username|split('@')|first }}</b></span></li>
+                                <li><hr/></li>
+                                {% if 'ROLE_ADMIN' in app.user.roles %}
+                                    <li>
+                                        <a href="{{ path('admin') }}" style="text-decoration: none; color: #1e1e1e; font-size: 15px">
+                                            Profilul meu
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                <li>
+                                    <a href="{{ path('app_logout') }}" style="text-decoration: none; color: #1e1e1e; font-size: 15px">
+                                        Deconecteaza-te
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <div class="dropdown-menu p-1">
+                            Se pare ca nu esti inregistrat.
+                            <a class="dropdown-item bg-warning" href="{{ path('app_login') }}">
+                                Intra in cont
+                            </a>
+                        </div>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="row pt-2 pb-2 navbarContainer">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <ul class="navbar-nav d-flex flex-row">
+                <li class="nav-item dropdown me-5">
+                    <a class="nav-link dropdown-toggle categorySectionStyle p-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categorii
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for category in twigGlobalsService.getMenuCategories() %}
+                            <li><a class="dropdown-item" href="{{ url('category_view', {'category':category.id}) }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item me-5">
+                    <a class="nav-link dropdown-toggle p-2" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                        Vendori
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for vendor in twigGlobalsService.getMenuVendors() %}
+                            <li><a class="dropdown-item" href="{{ url('app_vendor_show', {'id':vendor.id}) }}">{{ vendor.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item me-5">
+                    <a class="nav-link" href="{{ path('offer') }}">Oferte</a>
+                </li>
+                <li class="nav-item me-5">
+                    <a class="nav-link" href="{{ path('contact') }}">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+{% block body %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,94 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+    <div class="container mt-3">
+        <div class="row mb-5">
+            <div class="col-12 d-flex flex-column">
+                <div class="d-flex flex-row">
+                    <h1>{{ product }}</h1>
+                    {% if product.offerStatus %}
+                        <span class="badge text-bg-danger offerBadge">OFERTA!</span>
+                    {% endif %}
+                </div>
+                <div id="rating1" class="star-rating" role="rating" data-rating="3" style="user-select: none">
+                    <span class="star" data-value="1">&#9733;<span class="star-notification"></span></span>
+                    <span class="star" data-value="2">&#9733;<span class="star-notification"></span></span>
+                    <span class="star" data-value="3">&#9733;<span class="star-notification"></span></span>
+                    <span class="star" data-value="4">&#9733;<span class="star-notification"></span></span>
+                    <span class="star" data-value="5">&#9733;<span class="star-notification"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-6">
+                <div id="carouselExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        {% for image in product.productImages %}
+                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                <img src="{{ asset('img/' ~ image.image) }}" class="productImage" alt=""/>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-5">
+                <div class="d-flex flex-column align-items-end p-3 productInfoBox">
+                    <small style="margin-bottom: 5px">
+                        oferit de
+                        <a href="{{ url('app_vendor_show', {'id': product.vendor.id}) }}"><b>{{ product.vendor }}</b></a>
+                    </small>
+                    {% if product.offerStatus %}
+                        <span style="color: red"><strike>{{ product.formatNumber(product.price) }} RON</strike></span>
+                        <div class="d-flex flex-row" style="color: red">
+                            <small class="mt-3 me-2"><b>(-{{ product.discount }}%)</b></small>
+                            <h1>{{ product.formatNumber(product.calculateDiscount()) }} RON</h1>
+                        </div>
+                    {% else %}
+                        <h1>{{ product.formatNumber(product.price) }} RON</h1>
+                    {% endif %}
+                    <p style="margin-top: -12px">TVA inclus</p>
+                    <p style="margin-top: -7px; color: #1ad31a"><b>produs in stoc</b></p>
+                    <small style="margin-top: -7px; color: red"><b>Livrare gratuita oriunde in tara in perioada 20-25 martie!</b></small>
+                    <a href="{{ url('cart_add', {'product': product.id}) }}">
+                        <button type="button" class="btn btn-warning" style="margin-top: 10px; width: 200px; height: 50px"><b>Adauga in cos</b></button>
+                    </a>
+                    <a href="#"><p style="text-decoration: none; color: #1e1e1e; margin-top: 20px">Informatii despre producator</p></a>
+                    <a href="#"><p style="text-decoration: none; color: #1e1e1e; margin-top: -5px">Garantarea rambursarii banilor in 30 de zile</p></a>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-6 d-flex flex-row">
+                {% for image in product.productImages %}
+                    {% if not loop.first %}
+                        <img src="{{ asset('img/'~image.image) }}" style="width: 70px; height: 70px" alt=""/>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-6"></div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="bg-dark p-3">
+                    <h2 style="color: white">Descriere</h2>
+                </div>
+                <div class="bg-light p-3">
+                    <p>{{ product.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<script>
+    const ratings = document.getElementById('rating1'); const rating1 = new CDB.Rating(ratings);
+    rating1.getRating;
+</script>

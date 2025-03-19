@@ -1,0 +1,8 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Add category</h1>
+    {{ form(categoryForm) }}
+</div>
+{% endblock %}

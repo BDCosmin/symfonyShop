@@ -1,0 +1,46 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Produs</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Nume</th>
+                <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+                <th>Pret</th>
+                <td>{{ product.price }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ product.category }}</td>
+            </tr>
+            <tr>
+                <th>Vendor</th>
+                <td>{{ product.vendor }}</td>
+            </tr>
+            <tr>
+                <th>Oferta</th>
+                <td>{{ product.offerStatus ? 'Da' : 'Nu' }}</td>
+            </tr>
+            <tr>
+                <th>Discount</th>
+                <td>{{ product.discount }} %</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_crud_product_index') }}">back to list</a>
+
+    <a href="{{ path('app_crud_product_edit', {'id': product.id}) }}">edit</a>
+
+    {{ include('crud_product/_delete_form.html.twig') }}
+</div>
+{% endblock %}

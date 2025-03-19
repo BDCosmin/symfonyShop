@@ -1,0 +1,11 @@
+{{ include ('default/parts/header.html.twig', { 'categories': categories|default([]) }) }}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Creeaza produs nou</h1>
+
+    {{ include('crud_product/_form.html.twig') }}
+
+    <a href="{{ path('app_crud_product_index') }}">back to list</a>
+</div>
+{% endblock %}
